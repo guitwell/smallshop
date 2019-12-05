@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ShopsDao">
+
+    <resultMap id="shopResultMap" type="Shops">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="price" property="price"></result>
+        <result column="count" property="count"></result>
+        <result column="picture" property="picture"></result>
+        <association property="category" javaType="com.baizhi.entity.Category">
+            <id column="cid" property="id"></id>
+            <result column="cname" property="name"></result>
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="shopResultMap">
+        SELECT s.id as id,s.name as name,s.price as price,s.count as count,s.picture as picture,
+        c.id as cid,c.name as cname FROM s_category c LEFT JOIN s_shops s ON c.id=s.categoryid where c.leval=2
+    </select>
+    <select id="findById" resultMap="shopResultMap">
+        SELECT s.id as id,s.name as name,s.price as price,s.count as count,s.picture as picture,
+        c.id as cid,c.name as cname FROM s_category c LEFT JOIN s_shops s ON c.id=s.categoryid where s.id=#{id} and c.leval=2
+    </select>
+    <select id="findByName" resultMap="shopResultMap">
+        SELECT s.id as id,s.name as name,s.price as price,s.count as count,s.picture as picture,
+        c.id as cid,c.name as cname FROM s_category c LEFT JOIN s_shops s ON c.id=s.categoryid where s.name like '%${name}%' and c.leval=2
+    </select>
+    <insert id="addOne">
+        insert into s_shops values(#{id},#{name},#{price},#{count},#{picture},#{categoryid})
+    </insert>
+    <update id="updateOne">
+        update s_shops
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="price!=null">price=#{price},</if>
+            <if test="count!=null">count=#{count},</if>
+            <if test="picture!=null">picture=#{picture},</if>
+            <if test="categoryid!=null">name=#{categoryid}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>
+
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.RecomDao">
+
+    <select id="findByUserId" resultType="Recom">
+        select * from s_recom where uid=#{id}
+    </select>
+
+    <select id="findByUserIdAndName" resultType="Recom">
+        select * from s_recom where uid=#{id} and name=#{name}
+    </select>
+
+    <select id="findTheFirsts" resultType="Recom">
+        SELECT r.* FROM s_recom r WHERE r.uid=#{id} ORDER BY r.counts DESC LIMIT 5;
+    </select>
+
+    <insert id="addOne">
+        insert into s_recom values(#{id},#{name},#{counts},#{uid})
+    </insert>
+
+    <update id="updateOne">
+        update s_recom
+            <set>
+                <if test="name!=null">name=#{name},</if>
+                <if test="counts!=null">counts=#{counts},</if>
+                <if test="uid!=null">uid=#{uid}</if>
+            </set>
+        where id=#{id}
+    </update>
+
+
+</mapper>
+
+
+
+
+
+
+
+
