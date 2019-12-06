@@ -6,4 +6,7 @@ package com.baizhi.controller;
  * version : 1.0
  */
 public class Test1 {
+    public static void main(String[] args) {
+        System.out.println("测试方法");
+    }
 }
